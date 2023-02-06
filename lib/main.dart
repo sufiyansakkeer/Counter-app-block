@@ -18,19 +18,20 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext ctx) => CounterBloc(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.green,
           useMaterial3: true,
         ),
-        home: MyHomePage(title: 'Flutter Demo Home Page'),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({
+  const MyHomePage({
     Key? key,
     required this.title,
   }) : super(key: key);
@@ -61,19 +62,30 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //* here we call the event through two method ,
-          // * one is using read which is the new method and the other one is build provider
-          //? in read we are assigning which block need to call ,
-          //? block is like a stream of data in that data we are adding an event ,
-          //* we created two event and we are assigning the event in the add function
-          // context.read<CounterBloc>().add(Increment());
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              //* here we call the event through two method ,
+              // * one is using read which is the new method and the other one is build provider
+              //? in read we are assigning which block need to call ,
+              //? block is like a stream of data in that data we are adding an event ,
+              //* we created two event and we are assigning the event in the add function
+              context.read<CounterBloc>().add(Increment());
 
-          BlocProvider.of<CounterBloc>(context).add(Increment());
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+              // BlocProvider.of<CounterBloc>(context).add(Increment());
+            },
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              BlocProvider.of<CounterBloc>(context).add(Decrement());
+            },
+            child: const Icon(Icons.minimize),
+          )
+        ],
       ),
     );
   }
