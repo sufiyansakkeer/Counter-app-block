@@ -1,15 +1,12 @@
 part of 'counter_bloc.dart';
 
-//* here counter state is the base class(Parent class) ,
-//* we extends this counter state to use the other state,
-//* we will declare here the all the value's we gonna use
-class CounterState {
-  final int count;
+@freezed
+class CounterState with _$CounterState {
+  const factory CounterState({
+    required int count,
+  }) = _CounterState;
 
-  CounterState({required this.count});
-}
-
-//here we created initial state for giving initial value to the counter, and we assign 0 to count variable
-class InitialState extends CounterState {
-  InitialState() : super(count: 0);
+//? here we are assigning the state initial value is 0 ,
+//? also we need to tell the block also our initial value
+  factory CounterState.initial() => const CounterState(count: 0);
 }

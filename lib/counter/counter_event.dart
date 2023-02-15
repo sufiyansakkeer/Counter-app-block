@@ -1,9 +1,8 @@
 part of 'counter_bloc.dart';
 
-@immutable
-abstract class CounterEvent {}
-
-//*here we need to declare only the events, the actions will be in block only
-class Increment extends CounterEvent {}
-
-class Decrement extends CounterEvent {}
+@freezed
+class CounterEvent with _$CounterEvent {
+  //* Here we add the all events that need to be executed
+  const factory CounterEvent.increment() = Increment;
+  const factory CounterEvent.decrement() = Decrement;
+}

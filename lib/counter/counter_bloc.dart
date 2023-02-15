@@ -1,25 +1,24 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'counter_event.dart';
 part 'counter_state.dart';
+part 'counter_bloc.freezed.dart';
 
 class CounterBloc extends Bloc<CounterEvent, CounterState> {
-  //her we assigning to block InitialState so that the initial value will be the initialState's value
-  CounterBloc() : super(InitialState()) {
-    //here on function will manage the events,
-    // ? after on event we need to tell which event function is working
+  CounterBloc() : super(CounterState.initial()) {
     on<Increment>((event, emit) {
-      //* emit is like a set state it will update the ui according to the event
-      // here state is getter ,using that getter we get count value
-      final currentState = state.count;
-      final incrementedState = currentState + 1;
-      return emit(CounterState(count: incrementedState));
+      //? emit is like the set state ,it will change the ui
+      //* Instead of copying an object, we can use 'copyWith()' to create new object with same properties as the original ,
+      //* but with some of the values changed.
+      return emit(state.copyWith(count: state.count + 1));
     });
     on<Decrement>((event, emit) {
-      final currentState = state.count;
-      final decrementedState = currentState - 1;
-      return emit(CounterState(count: decrementedState));
+      //? emit is like the set state ,it will change the ui
+      //* Instead of copying an object, we can use 'copyWith()' to create new object with same properties as the original ,
+      //* but with some of the values changed.
+      final decrementedValue = state.copyWith(count: state.count - 1);
+      return emit(decrementedValue);
     });
   }
 }
